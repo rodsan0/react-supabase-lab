@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.shelf {
+  display: flex;
+}
+
+.game img {
+  height: 50vh;
+  filter: drop-shadow(5px 10px 5px #111);
+}
+
+.title h1 {
+  margin-bottom: -3vh;
+}
