@@ -1,3 +1,5 @@
+import { supabase } from './supabaseClient';
+import { useState } from 'react';
 import './App.css';
 
 var games = [
@@ -23,6 +25,36 @@ var games = [
     thumb: 'risk_of_rain.jpeg',
   },
 ];
+
+function Library() {
+  const [myBooks, setMyBooks] = useState([]);
+  async function getBooks() {
+    let { data: books, error } = await supabase
+      .from('books')
+      .select('*')
+    setMyBooks(books);
+  }
+  getBooks();
+  return (
+    <>
+    <h1>My favorite books</h1>
+    <table>
+      <th>Title</th>
+      <th>Author</th>
+      <th>ISBN-13</th>
+      {
+        myBooks.map(b => (
+          <tr>
+            <td>{b.title}</td>
+            <td>{b.author}</td>
+            <td>{b.isbn}</td>
+          </tr>
+        ))
+      }
+    </table>
+    </>
+  );
+}
 
 function Title() {
   return (
@@ -57,9 +89,13 @@ function Games() {
 }
 
 function Hi() {
+  const [count, setCount] = useState(0);
+  function doMagic() {
+    setCount(count + 1);
+  }
   return (
-    <button>
-      This does nothing!
+    <button onClick={doMagic}>
+      This does something! {count}
     </button>
   );
 }
@@ -68,11 +104,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <Library/>
         <Title></Title>
-        <Hi></Hi>
         <GameShelf>
           <Games />
         </GameShelf>
+        <Hi></Hi>
       </header>
     </div>
   );
