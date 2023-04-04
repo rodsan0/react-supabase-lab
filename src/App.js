@@ -29,7 +29,7 @@ var games = [
 function Library() {
   const [myBooks, setMyBooks] = useState([]);
   async function getBooks() {
-    let { data: books, error } = await supabase
+    let { data: books } = await supabase
       .from('books')
       .select('*')
     setMyBooks(books);
